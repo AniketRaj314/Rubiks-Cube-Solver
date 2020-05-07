@@ -2,11 +2,12 @@ let width, height, vidWidth, vidHeight, scan, cubeWidth, centerX, centerY;
 let smallCubeWidth, blocks;
 function setup() {
     width = innerWidth;
+    pixelDensity(10);
     height = innerHeight - 4;
     vidWidth = 500;
     vidHeight = 406;
     smallCubeWidth = 90;
-    cubeWidth = width / 4;
+    cubeWidth = width / 3;
     centerX = width / 2;
     centerY = height / 2;
     blocks = [];
@@ -32,6 +33,14 @@ function draw() {
     rect(width / 2, height / 2, vidWidth, vidHeight);
     image(video, width / 2, height / 2, vidWidth, vidHeight);
     drawCube();
+    centers = generateCenters();
+    fill(0);
+    video.loadPixels();
+    for(const center of centers) {
+        center.x = map(center.x, 0, vidWidth, 0, width);
+        center.y = map(center.y, 0, vidHeight, 0, height);
+        point(center.x, center.y);
+    }
     for(const block of blocks) {
         block.show();
     }
